@@ -1,0 +1,5 @@
+What's new?
+
+In this version, the Fast Fourier Transform (FFT) algorithm has been implemented.
+
+The package provides a collection of function series of functions to deal with nonparametric measurement error problems using the deconvolution kernel methods. The functions allow the errors to be either homoscedastic or heteroscedastic. To make the deconvolution estimators computationally more efficient in R, we adapt the FFT algorithm for density estimation with error-free data to the deconvolution kernel estimation.  Several bandwidth selection functions are also developed in the package.
