@@ -8,7 +8,9 @@
   To compute the cumulative distribution function from data coupled with measurement error.
 }
 \usage{
- DeconCdf(y,sig,x,error="normal",bw="dboot1",adjust=1,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
+## Default S3 method:
+ DeconCdf(y,sig,x,error="normal",bw="dboot1",adjust=1,
+	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
 }
 \arguments{
   \item{y}{The observed data.  It is a vector of length at least 3.}
@@ -85,7 +87,7 @@ bw2 <- bw.dboot2(w2,sig=sig2, error="normal")
 # estimate the distribution function with measurement error
 F2 <-  DeconCdf(w2,sig2,error='normal',bw=bw2)
 
-plot.DeconCdf(F2,  col="red", lwd=3, lty=2, xlab="x", ylab="F(x)", main="")
+plot(F2,  col="red", lwd=3, lty=2, xlab="x", ylab="F(x)", main="")
 lines(SDF(x2), lwd=3, lty=1)
 lines(SDF(w2), col="blue", lwd=3, lty=3)
 

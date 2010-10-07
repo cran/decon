@@ -8,7 +8,9 @@
   To perform nonparametric regression with errors-in-variables.
 }
 \usage{
- DeconNpr(y,sig,z,x,error='normal',bw='dboot1',adjust=1,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
+## Default S3 method:
+ DeconNpr(y,sig,z,x,error='normal',bw='dboot1',adjust=1,
+	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
 }
 \arguments{
   \item{y}{The observed data.  It is a vector of length at least 3.}
@@ -64,7 +66,7 @@ bw1 <- bw.dboot1(w, sig)
 # estimate the unknown density with measurement error
 (m1 <-  DeconNpr(w, sig, y ,error="normal", from=0.9*min(x), to=0.9*max(x)))
 # plot the results
-plot.DeconNpr(m1,  col="red", lwd=3, lty=2, xlab="x", ylab="m(x)", main="", zero.line=FALSE)
+plot(m1,  col="red", lwd=3, lty=2, xlab="x", ylab="m(x)", main="", zero.line=FALSE)
 lines(ksmooth(x,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), lwd=3, lty=1)
 lines(ksmooth(w,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), col="blue", lwd=3, lty=3)
 

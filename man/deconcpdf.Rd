@@ -8,7 +8,9 @@
   To compute the conditional probability density function from data with measurement error.
 }
 \usage{
- DeconCPdf(y,sig,y0,error='normal',bw1='dboot1',bw2='nrd0',adjust=1,fft=FALSE,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,tol=0,...)
+## Default S3 method:
+ DeconCPdf(y,sig,y0,error='normal',bw1='dboot1',bw2='nrd0',adjust=1,
+	fft=FALSE,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,tol=0,...)
 }
 \arguments{
   \item{y}{The observed data.  It is a vector of length at least 3.}

@@ -8,7 +8,9 @@
   To compute the probability density function from data contaminated with measurement error.
 }
 \usage{
- DeconPdf(y,sig,x,error='normal',bw='dboot1',adjust=1,fft=FALSE,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
+## Default S3 method:
+ DeconPdf(y,sig,x,error='normal',bw='dboot1',adjust=1,fft=FALSE,
+	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
 }
 \arguments{
   \item{y}{The observed data.  It is a vector of length at least 3.}
@@ -80,10 +82,10 @@ bw2 <- bw.dboot2(w2,sig=sig2, error="normal")
 
 # plot the results
 par(mfrow=c(1,2))
-plot.DeconPdf(f1,  col="red", lwd=3, lty=2, xlab="x", ylab="f(x)", main="")
+plot(f1,  col="red", lwd=3, lty=2, xlab="x", ylab="f(x)", main="")
 lines(density(x1, from=min(w1), to=max(w1)), lwd=3, lty=1)
 lines(density(w1), col="blue", lwd=3, lty=3)
-plot.DeconPdf(f2,  col="red", lwd=3, lty=2, xlab="x", ylab="f(x)", main="")
+plot(f2,  col="red", lwd=3, lty=2, xlab="x", ylab="f(x)", main="")
 lines(density(x2, from=min(w2), to=max(w2)), lwd=3, lty=1)
 lines(density(w2), col="blue", lwd=3, lty=3)
 
@@ -102,7 +104,7 @@ bw3 <- bw.dboot1(w3,sig=sig3, error="normal")
 
 # plot the results
 par(mfrow=c(1,1))
-plot.DeconPdf(f3,  col="red", lwd=3, lty=2, ylim=c(0,0.4), xlab="x", ylab="f(x)", main="")
+plot(f3,  col="red", lwd=3, lty=2, ylim=c(0,0.4), xlab="x", ylab="f(x)", main="")
 lines(density(x3, adjust=2), lwd=3, lty=1)
 lines(density(w3, adjust=2), col="blue", lwd=3, lty=3)
 

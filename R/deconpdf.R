@@ -128,10 +128,10 @@ function(y, sig, x, error = "normal", bw = "dboot1", adjust = 1,
   }
   return(structure(list(x = x,y = fhat$y,bw = bw,n = N,
                         call = match.call(), data.name = name,
-                        has.na = FALSE), class = "DeconPdf"))
+                        has.na = FALSE), class = "Decon"))
 }
 
-print.DeconPdf <- function (x, digits = NULL, ...) 
+print.Decon <- function (x, digits = NULL, ...) 
 {
     cat("\nCall:\n\t", deparse(x$call), "\n\nData: ", x$data.name, 
         " (", x$n, " obs.);", "\tBandwidth 'bw' = ", formatC(x$bw, 
@@ -141,7 +141,7 @@ print.DeconPdf <- function (x, digits = NULL, ...)
     invisible(x)
 }
 
-plot.DeconPdf  <- 
+plot.Decon  <- 
 function (x, main = NULL, xlab = NULL, ylab = "Density", type = "l", 
     zero.line = TRUE, ...) 
 {

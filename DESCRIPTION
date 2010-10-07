@@ -1,6 +1,6 @@
 Package: decon
-Version: 1.1-1
-Date: 2010-03-22
+Version: 1.2
+Date: 2010-10-07
 Title: Deconvolution Estimation in Measurement Error Models
 Author: Xiao-Feng Wang <wangx6@ccf.org>, Bin Wang
         <bwang@jaguar1.usouthal.edu>
@@ -12,6 +12,6 @@ Description: This package contains a collection of functions to deal
         and Wang, B. for details.
 License: GPL (>= 3)
 URL: http://www.r-project.org
-Packaged: 2010-03-22 23:10:35 UTC; xfwang
 Repository: CRAN
-Date/Publication: 2010-03-23 07:26:58
+Date/Publication: 2010-10-08 17:27:24
+Packaged: 2010-10-07 21:03:53 UTC; xfwang

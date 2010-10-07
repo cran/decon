@@ -113,30 +113,7 @@ function(y, sig, z, x, error = "normal", bw = "dboot1", adjust = 1,
     stop("The specified  error type is not supported!"));
   return(structure(list(x = x,y = fhat$y,bw = bw,n = N,
                         call = match.call(), data.name = name,
-                        has.na = FALSE), class = "DeconNpr"))
+                        has.na = FALSE), class = "Decon"))
 }
 
-print.DeconNpr <- function (x, digits = NULL, ...) 
-{
-    cat("\nCall:\n\t", deparse(x$call), "\n\nData: ", x$data.name, 
-        " (", x$n, " obs.);", "\tBandwidth 'bw' = ", formatC(x$bw, 
-            digits = digits), "\n\n", sep = "")
-    print(summary(as.data.frame(x[c("x", "y")])), digits = digits, 
-        ...)
-    invisible(x)
-}
 
-plot.DeconNpr  <- 
-function (x, main = NULL, xlab = NULL, ylab = "m(x)", type = "l", 
-    zero.line = FALSE, ...) 
-{
-    if (is.null(xlab)) 
-        xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
-    if (is.null(main)) 
-        main <- deparse(x$call)
-    plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, 
-        ...)
-    if (zero.line) 
-        abline(h = 0, lwd = 0.1, col = "gray")
-    invisible(NULL)
-}

@@ -38,6 +38,6 @@ function(y, sig, y0, error = "normal", bw1 = "dboot1", bw2="nrd0",adjust = 1,
 	fx.y <- fy.x*fx$y/fy0
     structure(list(x = fx$x, y = fx.y, bw= paste(round(fx$bw,5),"and", round(bw2,5), sep=" "),
         n = N, call = match.call(), data.name = name, has.na = FALSE), 
-        class = "density")
+        class = "Decon")
   }
 
