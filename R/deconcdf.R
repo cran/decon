@@ -1,5 +1,4 @@
-
-DeconCdf  <- 
+DeconCdf <- 
 function(y, sig, x, error = "normal", bw = "dboot1", adjust = 1,
          n = 512, from, to, cut =3, na.rm = FALSE,  
          grid=100,ub=2,...)

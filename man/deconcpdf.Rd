@@ -5,11 +5,10 @@
 \alias{DeconCPdf}
 \title{Estimating conditional probability density function from data with measurement error}
 \description{
-  To compute the conditional probability density function from data with measurement error.
+  To compute the conditional probability density function from data with measurement error. The measurement errors have to  be homoscedastic.
 }
 \usage{
-## Default S3 method:
- DeconCPdf(y,sig,y0,error='normal',bw1='dboot1',bw2='nrd0',adjust=1,
+DeconCPdf(y,sig,y0,error='normal',bw1='dboot1',bw2='nrd0',adjust=1,
 	fft=FALSE,n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,tol=0,...)
 }
 \arguments{
@@ -38,8 +37,7 @@
   If the number of points to be evaluated is too small (less than 32), a direct computing method is preferred.  The current version can support up to \eqn{2^21} points where the conditional PDF to be computed. 
 }
 \value{
- If \eqn{from} and \eqn{to} were not specified,
- \eqn{cut}=3 by default, \eqn{from=\min(y)-cut*bw},\eqn{to=\max(y)+cut*bw}.
+An object of class ``Decon''.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}
@@ -75,4 +73,4 @@ plot(f3, main="f3", xlab="x")
 }
 \keyword{nonparametric}
 \keyword{smooth}
-
+\keyword{measurement error}

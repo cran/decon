@@ -1,3 +1,5 @@
 exportPattern("^[[:alpha:]]+")
 useDynLib(decon)
 
+S3method(print, Decon)
+S3method(plot, Decon)

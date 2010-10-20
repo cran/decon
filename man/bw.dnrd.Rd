@@ -22,10 +22,10 @@
 \details{
 The current version approximate the 
     second term in the MISE by assuming that \eqn{X} is 
-  normally distributed.}
+  normally distributed. In the case of heteroscedastic error, the variance was approximated by the arithematic mean of the variances of \eqn{U}.
+}
 \value{
-    The variance was approximated 
-    by the arithematic mean of the variances of \eqn{U}.
+the selected bandwidth.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}

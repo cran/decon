@@ -5,12 +5,11 @@
 \alias{DeconPdf}
 \title{Estimating probability density function from data with measurement error}
 \description{
-  To compute the probability density function from data contaminated with measurement error.
+  To compute the probability density function from data contaminated with measurement error. The measurement errors can be either homoscedastic or heteroscedastic.
 }
 \usage{
-## Default S3 method:
- DeconPdf(y,sig,x,error='normal',bw='dboot1',adjust=1,fft=FALSE,
-	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
+DeconPdf(y,sig,x,error='normal',bw='dboot1',adjust=1,fft=FALSE,
+	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2, ...)
 }
 \arguments{
   \item{y}{The observed data.  It is a vector of length at least 3.}
@@ -36,8 +35,7 @@
   If the number of points to be evaluated is too small (less than 32), a direct computing method is preferred.  The current version can support up to \eqn{2^21} points where the PDF to be computed. 
 }
 \value{
- If \eqn{from} and \eqn{to} were not specified,
- \eqn{cut}=3 by default, \eqn{from=\min(y)-cut*bw},\eqn{to=\max(y)+cut*bw}.
+An object of class ``Decon''.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}
@@ -112,4 +110,6 @@ lines(density(w3, adjust=2), col="blue", lwd=3, lty=3)
 }
 \keyword{nonparametric}
 \keyword{smooth}
+\keyword{density estimation}
+\keyword{measurement error}
 

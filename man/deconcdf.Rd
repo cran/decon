@@ -5,11 +5,10 @@
 \alias{DeconCdf}
 \title{Estimating cumulative distribution function from data with measurement error}
 \description{
-  To compute the cumulative distribution function from data coupled with measurement error.
+  To compute the cumulative distribution function from data coupled with measurement error. The measurement errors can be either homoscedastic or heteroscedastic.
 }
 \usage{
-## Default S3 method:
- DeconCdf(y,sig,x,error="normal",bw="dboot1",adjust=1,
+DeconCdf(y,sig,x,error="normal",bw="dboot1",adjust=1,
 	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
 }
 \arguments{
@@ -35,8 +34,7 @@
     FFT is currently not supported for CDF computing. 
 }
 \value{
- If \eqn{from} and \eqn{to} were not specified,
- \eqn{cut}=3 by default, \eqn{from=\min(y)-cut*bw},\eqn{to=\max(y)+cut*bw}.
+An object of class ``Decon''.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}
@@ -95,4 +93,4 @@ lines(SDF(w2), col="blue", lwd=3, lty=3)
 }
 \keyword{nonparametric}
 \keyword{smooth}
-
+\keyword{measurement error}

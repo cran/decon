@@ -5,11 +5,10 @@
 \alias{DeconNpr}
 \title{Perform nonparametric regression with errors-in-variables}
 \description{
-  To perform nonparametric regression with errors-in-variables.
+  To perform nonparametric regression with errors-in-variables. The measurement errors can be either homoscedastic or heteroscedastic.
 }
 \usage{
-## Default S3 method:
- DeconNpr(y,sig,z,x,error='normal',bw='dboot1',adjust=1,
+DeconNpr(y,sig,z,x,error='normal',bw='dboot1',adjust=1,
 	n=512,from,to,cut=3,na.rm=FALSE,grid=100,ub=2,...)
 }
 \arguments{
@@ -36,8 +35,7 @@
     FFT is currently not supported for nonparametric regression. 
 }
 \value{
- If \eqn{from} and \eqn{to} were not specified,
- \eqn{cut}=3 by default, \eqn{from=\min(y)-cut*bw},\eqn{to=\max(y)+cut*bw}.
+An object of class ``Decon''.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}
@@ -73,4 +71,5 @@ lines(ksmooth(w,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), col=
 }
 \keyword{nonparametric}
 \keyword{smooth}
-
+\keyword{regression}
+\keyword{errors-in-variables}

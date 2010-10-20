@@ -28,6 +28,9 @@
 The current version approximate the 
     second term in the MISE by assuming that \eqn{X} is 
   normally distributed.}
+\value{
+the selected bandwidth.
+}
 \author{
   X.F. Wang \email{wangx6@ccf.org}
 

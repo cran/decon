@@ -28,10 +28,12 @@ Three cases are supported: (1) homo normal; (2) homo laplacian; (3) hetero norma
 
 Case (3) could be very slow, we reduce the number of grid points in computing the L-2 distance to 100 and reduce the optimal bandwidth searching grid points to 50 to speed up the algorithm.
 
+The integration was approximated by computing the average over a fine grid of points (1000 points).
+
 The case of heteroscedastic laplacian errors is not supported and is to be developed. 
 }
 \value{
-    The integration was approximated by computing the average over a fine grid of points (1000 points).
+the selected bandwidth.
 }
 \author{
   X.F. Wang \email{wangx6@ccf.org}
