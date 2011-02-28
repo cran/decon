@@ -47,6 +47,8 @@ Fan, J. and Truong, Y.K. (1993). Nonparametric regression with errors in variabl
 Statistics}, 21(4), 1900-1925.
 
 Delaigle, A. and Meister, A. (2007). Nonparametric regression estimation in the heteroscedastic errors-in-variables problem. \emph{Journal of the American Statistical Association}, 102, 1416-1426.
+
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{DeconPdf},\link{DeconCdf}}.
@@ -64,9 +66,12 @@ bw1 <- bw.dboot1(w, sig)
 # estimate the unknown density with measurement error
 (m1 <-  DeconNpr(w, sig, y ,error="normal", from=0.9*min(x), to=0.9*max(x)))
 # plot the results
-plot(m1,  col="red", lwd=3, lty=2, xlab="x", ylab="m(x)", main="", zero.line=FALSE)
-lines(ksmooth(x,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), lwd=3, lty=1)
-lines(ksmooth(w,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), col="blue", lwd=3, lty=3)
+plot(m1, col="red", lwd=3, lty=2, xlab="x", ylab="m(x)", main="", 
+			zero.line=FALSE)
+lines(ksmooth(x,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), 
+			lwd=3, lty=1)
+lines(ksmooth(w,y, kernel = "normal", 2, range.x=c(0.9*min(x),0.9*max(x))), 
+			col="blue", lwd=3, lty=3)
 
 }
 \keyword{nonparametric}

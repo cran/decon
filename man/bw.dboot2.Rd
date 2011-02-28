@@ -38,7 +38,7 @@ the selected bandwidth.
   B. Wang  \email{bwang@jaguar1.usouthal.edu}
 }
 \references{
-Wang, X.F. and Wang, B. (2010). Deconvolution estimation in measurement error models: The R Package \emph{decon}. \emph{Technical Report}.
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
 \code{\link{bw.dnrd}},  \code{\link{bw.dmise}},  \code{\link{bw.dboot1}}.

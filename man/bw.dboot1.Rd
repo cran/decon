@@ -45,7 +45,7 @@ Delaigle, A. and Gijbels, I. (2004). Practical bandwidth selection in
 deconvolution kernel density estimation. \emph{Computational Statistics and Data
 Analysis}, 45, 249-267.
 
-Wang, X.F. and Wang, B. (2010). Deconvolution estimation in measurement error models: The R Package \emph{decon}. \emph{Technical Report}.
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{bw.dnrd}}, \code{\link{bw.dmise}}, \code{\link{bw.dboot2}}.

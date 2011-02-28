@@ -47,18 +47,16 @@ Delaigle, A. and Gijbels, I. (2004). Bootstrap bandwidth selection in kernel den
 
 Fan, J. (1991). On the optimal rates of convergence for nonparametric deconvolution problems. \emph{The Annals of Statistics}, 19, 1257-1272. 
 
-Fan, J. (1992). Deconvolution with supersmooth distributions. \emph{The Canadian Journal of
-Statistics}, 20, 155-169.
+Fan, J. (1992). Deconvolution with supersmooth distributions. \emph{The Canadian Journal of Statistics}, 20, 155-169.
 
 
-Hall, P. and Lahiri, S.N. (2008). Estimation of distributions, moments and quantiles in deconvolution
-problems. \emph{Annals of Statistics}, 36(5), 2110-2134.
+Hall, P. and Lahiri, S.N. (2008). Estimation of distributions, moments and quantiles in deconvolution problems. \emph{Annals of Statistics}, 36(5), 2110-2134.
 
 Stefanski L.A. and Carroll R.J. (1990). Deconvoluting kernel density estimators. \emph{Statistics}, 21, 169-184.
 
 Wang, X.F., Fan, Z. and Wang, B. (2010). Estimating smooth distribution function in the presence of heterogeneous measurement errors. \emph{Computational Statistics and Data Analysis}, 54, 25-36.
 
-Wang, X.F. and Wang, B. (2010). Deconvolution estimation in measurement error models: The R Package \emph{decon}. \emph{Technical Report}.
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{DeconPdf}}, \code{\link{DeconNpr}}.

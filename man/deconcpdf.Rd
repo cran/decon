@@ -48,6 +48,8 @@ An object of class ``Decon''.
 Fan, J. (1991). On the optimal rates of convergence for nonparametric deconvolution problems. \emph{The Annals of Statistics}, 19, 1257-1272. 
 
 Wang XF, Ye D (2010). Conditional density estimation with measurement error. Technical Report.
+
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{DeconPdf}}.

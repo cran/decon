@@ -42,6 +42,8 @@ Fan, J. (1992). Deconvolution with supersmooth distributions.
 
 Stefanski, L. and Carroll, R. J. (1990). Deconvoluting kernel density estimators. 
 \emph{Statistics}, 21, 169-184.
+
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{bw.dnrd}}, \code{\link{bw.dboot1}}, \code{\link{bw.dboot2}}.

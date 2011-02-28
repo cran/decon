@@ -43,13 +43,13 @@ An object of class ``Decon''.
   B. Wang  \email{bwang@jaguar1.usouthal.edu}
 }
 \references{
-Delaigle, A. and Meister, A. (2008). Density estimation with heteroscedastic error. \emph{Bernoulli}, 14,
-562-579.
+Delaigle, A. and Meister, A. (2008). Density estimation with heteroscedastic error. \emph{Bernoulli}, 14, 562-579.
 
 Fan, J. (1991). On the optimal rates of convergence for nonparametric deconvolution problems. \emph{The Annals of Statistics}, 19, 1257-1272. 
 
-Fan, J. (1992). Deconvolution with supersmooth distributions. \emph{The Canadian Journal of
-Statistics}, 20, 155-169.
+Fan, J. (1992). Deconvolution with supersmooth distributions. \emph{The Canadian Journal of Statistics}, 20, 155-169.
+
+Wang, X.F. and Wang, B. (2011). Deconvolution estimation in measurement error models: The R package decon. \emph{Journal of Statistical Software}, 39(10), 1-24.
 }
 \seealso{
  \code{\link{DeconCdf}}, \code{\link{DeconNpr}}, \code{\link{DeconCPdf}}.
@@ -63,7 +63,8 @@ x1 <- rnorm(n1, sd=1)
 sig1 <- .5
 u1 <- ifelse(runif(n1) > 0.5, 1, -1) * rexp(n1,rate=1/sig1)
 w1 <- x1+u1
-## the rule-of-thumb method may not be accurate, you may try the bootstrap method
+## The rule-of-thumb method may not be accurate, 
+## you may try the bootstrap method
 bw1 <- bw.dnrd(w1,sig=sig1, error="laplacian")
 (f1 <-  DeconPdf(w1,sig1,error='laplacian',bw=bw1, fft=TRUE))
 
