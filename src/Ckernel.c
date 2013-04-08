@@ -796,7 +796,7 @@ void DKESupport(double *y,int *ny,double *x, int *nx,
   double a=0.0,b=1.0;
   double c = 0.5 * (b - a);
   double d = 0.5 * (b + a);
-  double dum, sb2,nt,pt,t,t2;
+  double dum, sb2,nt,pt,t;
   int K=NOPZ100;  //K is changable
   double ntexp[K],ptexp[K];  //K is changable
   const double *pB = &B100[K - 1];  //K is changable 
@@ -1040,7 +1040,7 @@ void NormNorm1(int *n, double *Rfx,double *s2, double *h1,double *grid,double *u
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=fmax(h1[0]/ub[0],sqrt(s2[0])), hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,hdiff, hopt;
+  double mise,mmin=99999999999.,hdiff, hopt=0.0;
   int i;
   for(i=0;i<30;i++){
     h += hstep;
@@ -1057,7 +1057,7 @@ void NormLap1(int *n, double *Rfx,double *s2, double *h1,double *grid,double *ub
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,hdiff, hopt;
+  double mise,mmin=99999999999., hopt=0.0;
   int i;
   for(i=0;i<(int)grid[0];i++){
     h += hstep;
@@ -1078,7 +1078,7 @@ void SuppNorm1(int *n, double *Rfx,double *s2, double *h1,double *grid,double *u
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun3p f[1];
   f[0] = funSuppNorm1;
   int i;
@@ -1102,7 +1102,7 @@ void SuppLap1(int *n, double *Rfx,double *s2, double *h1,double *grid,double *ub
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun3p f[1];
   f[0] = funSuppLap1;
   int i;
@@ -1135,7 +1135,7 @@ void SuppNorm2(int *n, double *Rfx,double *ss, double *h1,double *grid,double *u
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun4p f[1];
   f[0] = funSuppNorm2;
   int i;
@@ -1168,7 +1168,7 @@ void SuppLap2(int *n, double *Rfx,double *ss, double *h1,double *grid,double *ub
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun4p f[1];
   f[0] = funSuppLap2;
   int i;
@@ -1201,7 +1201,7 @@ void NormNorm2(int *n, double *Rfx,double *ss, double *h1,double *grid,double *u
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun4p f[1];
   f[0] = funNormNorm2;
   int i;
@@ -1233,7 +1233,7 @@ void NormLap2(int *n, double *Rfx,double *ss, double *h1,double *grid,double *ub
 //Kernel=normal; Error=normal; homoscedastic=yes;
 {
   double h=h1[0]/ub[0], hstep=(ub[0]-1./ub[0])*h1[0]/grid[0];
-  double mise,mmin=99999999999.,fint, hopt;
+  double mise,mmin=99999999999.,fint, hopt=0.0;
   Fun4p f[1];
   f[0] = funNormLap2;
   int i;
@@ -1303,7 +1303,7 @@ void NPRGauss(double *y,int *ny,double *zs,double *x, int *nx,
 void NPRLaplace(double *y,int *ny,double *zs,double *x, int *nx, 
 		double *bw,double *sig)
 {  
-  double z[ny[0]], sigh2,tmp1,tmp2,sum1,sum2,sum1a,sum2a;
+  double z[ny[0]], sigh2,tmp1,tmp2,sum1,sum2;
   sigh2 = pow(sig[0]/bw[0],2.0);
   int i,j;
   for(i=0;i<nx[0];i++){
@@ -1331,7 +1331,7 @@ void NPRSupport(double *y,int *ny,double *zs,double *x, int *nx,
   double a=0.0,b=1.0;
   double c = 0.5 * (b - a);
   double d = 0.5 * (b + a);
-  double dum, sb2,nt,pt,t,t2;
+  double dum, sb2,nt,pt;
   int K=NOPZ100;  //K is changable
   double ntexp[K],ptexp[K];  //K is changable
   const double *pB = &B100[K - 1];  //K is changable 
@@ -1482,12 +1482,10 @@ double BootHeteroSupp(double t,double h, double g, double *sig, double *x,int n)
 
 double BootHomoNorm(double t,double h, double g, double *sig, double *x,int n){
   int i;
-  double mucos=0.,phi2,ht2,t2,tsig2,gt2,fsum1,fsum2,sumexp;
+  double mucos=0.,phi2,ht2,tsig2,gt2;
   ht2 = pow(h*t,2.0);
-  t2 = pow(t,2.0);
   tsig2 = pow(t*sig[0],2.0);
   gt2 = pow(g*t,2.0);
-  fsum1 = 0.0;fsum2=0.;sumexp=0.0;
   for(i=0;i<n;i++){
     mucos = cos(t*x[i]); //used as temporary variable
   }
@@ -1499,9 +1497,8 @@ double BootHomoNorm(double t,double h, double g, double *sig, double *x,int n){
 
 double BootHeteroNorm(double t,double h, double g, double *sig, double *x,int n){
   int i;
-  double mucos=0.,phi2,ht2,t2,tsig2,gt2,fsum1,fsum2,rn,rd,ratio,sumexp;
+  double mucos=0.,phi2,ht2,tsig2,gt2,fsum1,fsum2,rn,rd,ratio,sumexp;
   ht2 = pow(h*t,2.0);
-  t2 = pow(t,2.0);
   gt2 = pow(g*t,2.0);
   fsum1 = 0.0;fsum2=0.;sumexp=0.0;;rn=0.0;rd=0.0;ratio=0.0;
   for(i=0;i<n;i++){
@@ -1524,7 +1521,7 @@ void bwBoot1(double *h0,int *size,int *type,double *y,double *sig,
 	     int *grid,double *ub)
 {
   double g=h0[0],h=h0[0]/ub[0], hstep=(ub[0]-1./ub[0])*h0[0]/grid[0];
-  double mise,mmin=99999999999., fint, hopt;
+  double mise,mmin=99999999999., fint, hopt=0.0;
   Fun6p f[4];
   f[0] = BootHomoSupp;
   f[1] = BootHeteroSupp;
