@@ -962,7 +962,7 @@ void DKEHSupport(double *y,int *ny,double *x, int *nx,
   const double *pA = &A100[K - 1];  //K is changable
   double nsum, psum;
 
-  nsum = bw[0]*bw[0];//reuse valuable
+  nsum = bw[0]*bw[0];//reuse variable
   for(j=0;j<ny[0];j++){
     sigh[j] = -0.5 * pow(sig[j],2.0)/nsum;
   }
@@ -1391,7 +1391,7 @@ void NPRHSupport(double *y,int *ny,double *zs,double *x, int *nx,
   const double *pA = &A100[K - 1];  //K is changable
   double nsum, psum,denom,tmp0,nsum2,psum2;
 
-  nsum = bw[0]*bw[0];//reuse valuable
+  nsum = bw[0]*bw[0];//reuse variable
   for(j=0;j<ny[0];j++){
     sigh[j] = -0.5 * pow(sig[j],2.0)/nsum;
   }
@@ -1575,3 +1575,268 @@ void bwBoot1(double *h0,int *size,int *type,double *y,double *sig,
   h0[0]=hopt;
 }
  
+
+// Density estimation based on a classic measurement error model with
+// unknown error type.  "S2" = Var(Y) - Var(E) > 0.
+
+void NPDESupport(double *y,int *ny, double *e, int *ne, 
+		 double *x, int *nx, double *bw, int *isearch, double *S2)
+{  
+
+  int i,j,k;
+  double integral = 0.0; 
+  double a=-1.0/bw[0],b=1.0/bw[0];
+  double c = 0.5 * (b - a);
+  double d = 0.5 * (b + a);
+  double dum;
+  int K = NOPZ100;  //K is changable
+  double nt[K], pt[K], nt2, pt2,nt3[K],pt3[K];
+  const double *pB = &B100[K - 1];  //K is changable 
+  const double *pA = &A100[K - 1];  //K is changable
+  double pa1, pb1, pa2, pb2, na1, nb1, na2, nb2;
+  double na[K], pa[K], nb[K], pb[K];
+  double fx[nx[0]], fy[nx[0]];
+
+  // compute intermediate variables
+  k=K-1;
+  for (; pB >= B100; pA--, pB--,k--) {
+    dum = c * *pB;
+    nt[k] = d-dum;
+    pt[k] = d+dum;
+    nt2 = pow(nt[k]*bw[0],2.0);
+    nt3[k] = pow(1.0-nt2,3.0);
+    pt2 = pow(pt[k]*bw[0],2.0);
+    pt3[k] = pow(1.0-pt2,3.0);
+    
+    pa1 = 0.0; pb1 = 0.0; 
+    na1 = 0.0; nb1 = 0.0; 
+    for(j=0;j<ne[0];j++){
+      pa1 += cos(pt[k]*e[j]);
+      na1 += cos(nt[k]*e[j]);
+      pb1 += sin(pt[k]*e[j]);
+      nb1 += sin(nt[k]*e[j]);
+    }
+
+    pa2 = 0.0; pb2 = 0.0; 
+    na2 = 0.0; nb2 = 0.0; 
+    for(j=0;j<ny[0];j++){
+      pa2 += cos(pt[k]*y[j]);
+      na2 += cos(nt[k]*y[j]);
+      pb2 += sin(pt[k]*y[j]);
+      nb2 += sin(nt[k]*y[j]);
+    }
+
+    pa[k] = 0.0; pb[k] = 0.0; 
+    if(pa1*pa1 + pb1*pb1 > ne[0]){
+      pa[k] = (pa1*pa2+pb1*pb2)/(pa1*pa1+pb1*pb1);
+      pb[k] = (pa1*pb2-pb1*pa2)/(pa1*pa1+pb1*pb1);
+    }
+
+    na[k] = 0.0; nb[k] = 0.0;
+    if(na1*na1 + nb1*nb1 > ne[0]){
+      na[k] = (na1*na2+nb1*nb2)/(na1*na1+nb1*nb1);
+      nb[k] = (na1*nb2-nb1*na2)/(na1*na1+nb1*nb1);
+    }
+  }
+  
+  if(isearch[0] == 0){
+    k=K-1;
+    for (; pB >= B100; pA--, pB--,k--) {
+      nt2 = pow(nt[k]*bw[0],2.0);
+      nt3[k] = pow(1.0-nt2,3.0);
+      pt2 = pow(pt[k]*bw[0],2.0);
+      pt3[k] = pow(1.0-pt2,3.0);
+    }
+      
+    // compute density estimates
+    for(i=0;i<nx[0];i++){
+      k = K-1;
+      integral = 0.0;
+      pB = &B100[K - 1];   
+      pA = &A100[K - 1];  
+      for (; pB >= B100; pA--, pB--,k--) {
+	na1 = na[k]*cos(nt[k]*x[i])+nb[k]*sin(nt[k]*x[i]); //reuse variable
+	pa1 = pa[k]*cos(pt[k]*x[i])+pb[k]*sin(pt[k]*x[i]); //reuse variable
+	integral +=  *pA * (na1*nt3[k] + pa1*pt3[k]);
+      }
+      x[i] = 0.5*M_1_PI*c*integral*ne[0]/ny[0];
+      if(x[i]<0.0) x[i] = 0.0;
+    }
+  }else{
+    double h, h0, hstep, hopt=-1.0;
+    double mu, vx, dvar, vmin=999.0, dx = x[1]-x[0];
+    
+    hstep = 0.01*bw[0];
+    h0 = 0.1*bw[0]; h = h0;
+    for(j=0;j<110;j++){
+      h += hstep;
+      
+      k=K-1;
+      for (; pB >= B100; pA--, pB--,k--) {
+	nt2 = pow(nt[k]*h,2.0);
+	nt3[k] = pow(1.0-nt2,3.0);
+	pt2 = pow(pt[k]*h,2.0);
+      pt3[k] = pow(1.0-pt2,3.0);
+      }
+      
+      // compute density estimates
+      for(i=0;i<nx[0];i++){
+	k = K-1;
+	integral = 0.0;
+	pB = &B100[K - 1];   
+	pA = &A100[K - 1];  
+	for (; pB >= B100; pA--, pB--,k--) {
+	  na1 = na[k]*cos(nt[k]*x[i])+nb[k]*sin(nt[k]*x[i]); //reuse variable
+	  pa1 = pa[k]*cos(pt[k]*x[i])+pb[k]*sin(pt[k]*x[i]); //reuse variable
+	  integral +=  *pA * (na1*nt3[k] + pa1*pt3[k]);
+	}
+	fx[i] = 0.5*M_1_PI*c*integral*ne[0]/ny[0];
+	if(fx[i]<0.0) fx[i] = 0.0;
+      }
+      
+      mu = 0.0; 
+      for(i=0;i<nx[0];i++){
+	mu += fx[i] * x[i];
+      }
+      mu *= dx;
+      
+      vx = 0.0; //variance
+      for(i=0;i<nx[0];i++){
+	vx += (x[i]-mu)*(x[i]-mu)*fx[i];
+      }
+      vx *= dx;
+      dvar = fabs(vx - S2[0]);
+      if(dvar < vmin){
+	vmin = dvar;
+	hopt = h;
+	for(i=0;i<nx[0];i++){
+	  fy[i] = fx[i];
+	}
+      }
+    }
+    if(hopt <= 0.0){
+      bw[0] = h0;
+      for(i=0;i<nx[0];i++){
+	x[i] = fx[i];
+      }
+    }else{
+      bw[0] = hopt;
+      for(i=0;i<nx[0];i++){
+	x[i] = fy[i];
+      }
+    }
+  }
+}
+  
+void NPRegSupport(double *w, double *y,int *ny, double *e, int *ne, 
+		 double *x, int *nx, double *bw)
+{  
+
+  int i,j,k;
+  double integral = 0.0; 
+  double a=-1.0/bw[0],b=1.0/bw[0];
+  double c = 0.5 * (b - a);
+  double d = 0.5 * (b + a);
+  double dum;
+  int K = NOPZ100;  //K is changable
+  double nt[K], pt[K], nt2, pt2,nt3[K],pt3[K];
+  const double *pB = &B100[K - 1];  //K is changable 
+  const double *pA = &A100[K - 1];  //K is changable
+  double pa1, pb1, pa2, pb2, na1, nb1, na2, nb2;
+  double na[K], pa[K], nb[K], pb[K], mx[nx[0]];
+  double nc[K], pc[K], nd[K], pd[K];
+
+  // compute intermediate variables
+  k=K-1;
+  for (; pB >= B100; pA--, pB--,k--) {
+    dum = c * *pB;
+    nt[k] = d-dum;
+    pt[k] = d+dum;
+    nt2 = pow(nt[k]*bw[0],2.0);
+    nt3[k] = pow(1.0-nt2,3.0);
+    pt2 = pow(pt[k]*bw[0],2.0);
+    pt3[k] = pow(1.0-pt2,3.0);
+    
+    pa1 = 0.0; pb1 = 0.0; 
+    na1 = 0.0; nb1 = 0.0; 
+    for(j=0;j<ne[0];j++){
+      pa1 += cos(pt[k]*e[j]);
+      na1 += cos(nt[k]*e[j]);
+      pb1 += sin(pt[k]*e[j]);
+      nb1 += sin(nt[k]*e[j]);
+    }
+
+    pa2 = 0.0; pb2 = 0.0; 
+    na2 = 0.0; nb2 = 0.0; 
+    for(j=0;j<ny[0];j++){
+      pa2 += cos(pt[k]*w[j]);
+      na2 += cos(nt[k]*w[j]);
+      pb2 += sin(pt[k]*w[j]);
+      nb2 += sin(nt[k]*w[j]);
+    }
+
+    pa[k] = 0.0; pb[k] = 0.0; 
+    if(pa1*pa1 + pb1*pb1 > ne[0]){
+      pa[k] = (pa1*pa2+pb1*pb2)/(pa1*pa1+pb1*pb1);
+      pb[k] = (pa1*pb2-pb1*pa2)/(pa1*pa1+pb1*pb1);
+    }
+
+    na[k] = 0.0; nb[k] = 0.0;
+    if(na1*na1 + nb1*nb1 > ne[0]){
+      na[k] = (na1*na2+nb1*nb2)/(na1*na1+nb1*nb1);
+      nb[k] = (na1*nb2-nb1*na2)/(na1*na1+nb1*nb1);
+    }
+    // compute m(x)
+    pa2 = 0.0; pb2 = 0.0; 
+    na2 = 0.0; nb2 = 0.0; 
+    for(j=0;j<ny[0];j++){
+      pa2 += cos(pt[k]*w[j])*y[j];
+      na2 += cos(nt[k]*w[j])*y[j];
+      pb2 += sin(pt[k]*w[j])*y[j];
+      nb2 += sin(nt[k]*w[j])*y[j];
+    }
+
+    pc[k] = 0.0; pd[k] = 0.0; 
+    if(pa1*pa1 + pb1*pb1 > ne[0]){
+      pc[k] = (pa1*pa2+pb1*pb2)/(pa1*pa1+pb1*pb1);
+      pd[k] = (pa1*pb2-pb1*pa2)/(pa1*pa1+pb1*pb1);
+    }
+
+    nc[k] = 0.0; nd[k] = 0.0;
+    if(na1*na1 + nb1*nb1 > ne[0]){
+      nc[k] = (na1*na2+nb1*nb2)/(na1*na1+nb1*nb1);
+      nd[k] = (na1*nb2-nb1*na2)/(na1*na1+nb1*nb1);
+    }
+  }
+  
+  k=K-1;
+  for (; pB >= B100; pA--, pB--,k--) {
+    nt2 = pow(nt[k]*bw[0],2.0);
+    nt3[k] = pow(1.0-nt2,3.0);
+    pt2 = pow(pt[k]*bw[0],2.0);
+    pt3[k] = pow(1.0-pt2,3.0);
+  }
+      
+  // compute density estimates
+  for(i=0;i<nx[0];i++){
+    k = K-1;
+    integral = 0.0;
+    mx[i] = 0.0;
+    pB = &B100[K - 1];   
+    pA = &A100[K - 1];  
+    for (; pB >= B100; pA--, pB--,k--) {
+      na1 = na[k]*cos(nt[k]*x[i])+nb[k]*sin(nt[k]*x[i]); //reuse variable
+      pa1 = pa[k]*cos(pt[k]*x[i])+pb[k]*sin(pt[k]*x[i]); //reuse variable
+      integral +=  *pA * (na1*nt3[k] + pa1*pt3[k]);
+      na2 = nc[k]*cos(nt[k]*x[i])+nd[k]*sin(nt[k]*x[i]); //reuse variable
+      pa2 = pc[k]*cos(pt[k]*x[i])+pd[k]*sin(pt[k]*x[i]); //reuse variable
+      mx[i] += *pA * (na2*nt3[k] + pa2*pt3[k]);
+    }
+    if(integral<=0.0){
+      x[i] = 0.0;
+    }else{
+      x[i] = mx[i]/integral;
+    }
+  }
+}
+  

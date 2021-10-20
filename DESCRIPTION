@@ -1,11 +1,11 @@
 Package: decon
 Type: Package
 Title: Deconvolution Estimation in Measurement Error Models
-Version: 1.2-4
-Date: 2013-04-08
+Version: 1.3-4
+Date: 2021-10-20
 Author: Xiao-Feng Wang, Bin Wang
 Maintainer: Xiao-Feng Wang <wangx6@ccf.org>
-Description: This package contains a collection of functions to deal
+Description: A collection of functions to deal
         with nonparametric measurement error problems using
         deconvolution kernel methods. We focus two measurement error
         models in the package: (1) an additive measurement error model,
@@ -24,6 +24,6 @@ Description: This package contains a collection of functions to deal
         Statistical Software, 39(10), 1-24.
 License: GPL (>= 3)
 Repository: CRAN
-Date/Publication: 2013-04-17 23:06:49
-Packaged: 2013-04-08 23:15:41 UTC; bwang
+Date/Publication: 2021-10-20 20:50:05 UTC
+Packaged: 2021-10-20 18:38:09 UTC; liangenwang
 NeedsCompilation: yes
